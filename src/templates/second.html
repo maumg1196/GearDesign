@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% load static from staticfiles %}
+{% load widget_tweaks %}
+
+{% block title %}Diseño de Engranes{% endblock title %}
+
+{% block content %}
+  <div class="card center" style="width: 80%;">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-4">
+          <h3>F.S.</h3>
+          <p>{{ fs }}</p>
+        </div>
+        <div class="col-4">
+          <h3>HP del motor</h3>
+          <p>{{ HP }}</p>
+        </div>
+        <div class="col-4">
+          <h3>Paso Diametral</h3>
+          <p>{{ Pd }}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-4">
+          <h3>Dientes del Piñón</h3>
+          <p>{{ Np }}</p>
+        </div>
+        <div class="col-4">
+          <h3>RPMs del Engrane</h3>
+          <p>{{ Wg }}</p>
+        </div>
+        <div class="col-4">
+          <h3>RPMs del Piñón</h3>
+          <p>{{ Wp }}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-4">
+          <h3>Potencia de Diseño</h3>
+          <p>{{ PD }}</p>
+        </div>
+        <div class="col-4">
+          <h3>Dientes del Engrane</h3>
+          <p>{{ Ng }}</p>
+        </div>
+        <div class="col-4">
+          <h3>Paso Diametral (Piñón)</h3>
+          <p>{{ Dp }}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-4">
+          <h3>Velocidad Tangencial</h3>
+          <p>{{ Vt }}</p>
+        </div>
+        <div class="col-4">
+          <h3>Distancia entre Centros</h3>
+          <p>{{ C }}</p>
+        </div>
+        <div class="col-4">
+          <h3>Fuerza Transmitida</h3>
+          <p>{{ Ft }}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-4">
+          <h3>Ancho de la Cara</h3>
+          <p>{{ F }}</p>
+        </div>
+        <div class="col-4">
+          <h3></h3>
+          <p></p>
+        </div>
+        <div class="col-4">
+          <h3></h3>
+          <p></p>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

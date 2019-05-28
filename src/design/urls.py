@@ -6,10 +6,15 @@ app_name = 'design'
 
 urlpatterns = [
 
-    # CSM Views.
+    # Design Views.
     path(
         '',
-        views.HomeView.as_view(),
+        views.FirstView.as_view(),
+        name='home'
+    ),
+    path(
+        'second/',
+        views.SecondView.as_view(),
         name='home'
     ),
 
