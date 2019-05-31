@@ -1,7 +1,11 @@
 """Design's Views."""
 import math
+from .forms import (
+    GearForm,
+    FirstForm,
+)
 from .models import Gear
-from .forms import FirstForm
+from django.urls import reverse
 from django.views.generic import (
     TemplateView,
     CreateView,
@@ -13,13 +17,61 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 class GearCreate(LoginRequiredMixin, CreateView):
 
     model = Gear
-    form_class = FirstForm
+    form_class = GearForm
     template_name = "first.html"
 
     def form_valid(self, form):
         """If the form is valid, save the associated model."""
-        self.object = form.save()
-        return super().form_valid(form)
+        self.object = form.save(commit=False)
+        self.object.user = self.request.user
+
+        fs = self.object.fs
+        HP = self.object.HP
+        Np = self.object.Np
+        Pd = self.object.Pd
+        Wg = self.object.Wg
+        Wp = self.object.Wp
+
+        PotD = HP * fs
+        Ng = round((Wp / Wg) * Np)
+        Dp = Np / Pd
+        Vt = round((math.pi * Dp * Wp) / 12, 2)
+        C = round((Np + Ng) / (2 * Pd), 2)
+        Ft = round((33000 * PotD) / Vt, 2)
+        F = 12 / Pd
+        if Vt < 800:
+            A = 10
+        elif 800 <= Vt < 2000:
+            A = 8
+        elif 2000 <= Vt < 4000:
+            A = 6
+        else:
+            A = 4
+        B = 0.25 * ((A - 5)**0.667)
+        Cprime = 50 + (56 * (1 - B))
+        kv = round((Cprime / (Cprime + math.sqrt(Vt)))**(-B), 4)
+        if F < 1:
+            Cpf = (F / (10 * Dp)) - 0.025
+        else:
+            Cpf = (F / (10 * Dp)) - 0.0375 + (0.0125 * F)
+        Cpf = round(Cpf, 4)
+
+        self.object.PotD = PotD
+        self.object.Ng = Ng
+        self.object.Dp = Dp
+        self.object.Vt = Vt
+        self.object.C = C
+        self.object.Ft = Ft
+        self.object.F = F
+        self.object.Av = A
+        self.object.kv = kv
+        self.object.Cpf = Cpf
+
+        self.object.save()
+        return super(GearCreate, self).form_valid(form)
+
+    def get_success_url(self):
+        return reverse('design:first')
 
 
 class FirstView(LoginRequiredMixin, FormView):
