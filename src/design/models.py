@@ -45,7 +45,7 @@ class Gear(models.Model):
         blank=True,
         null=True,
     )
-    PD = models.FloatField(
+    PotD = models.FloatField(
         'potencia de diseño',
         blank=True,
         null=True,
@@ -86,6 +86,11 @@ class Gear(models.Model):
         null=True,
     )
     kv = models.FloatField(
+        blank=True,
+        null=True,
+    )
+    Cpf = models.FloatField(
+        'factor de proporción del piñón',
         blank=True,
         null=True,
     )

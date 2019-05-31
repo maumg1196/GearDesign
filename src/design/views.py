@@ -1,11 +1,25 @@
 """Design's Views."""
 import math
+from .models import Gear
 from .forms import FirstForm
 from django.views.generic import (
     TemplateView,
+    CreateView,
     FormView,
 )
 from django.contrib.auth.mixins import LoginRequiredMixin
+
+
+class GearCreate(LoginRequiredMixin, CreateView):
+
+    model = Gear
+    form_class = FirstForm
+    template_name = "first.html"
+
+    def form_valid(self, form):
+        """If the form is valid, save the associated model."""
+        self.object = form.save()
+        return super().form_valid(form)
 
 
 class FirstView(LoginRequiredMixin, FormView):
@@ -74,7 +88,7 @@ class SecondView(LoginRequiredMixin, TemplateView):
             A = 6
         else:
             A = 4
-        B = 0.25 ((A - 5)**0.667)
+        B = 0.25 * ((A - 5)**0.667)
         Cprime = 50 + (56 * (1 - B))
         kv = round((Cprime / (Cprime + math.sqrt(Vt)))**(-B), 4)
         if F < 1:
