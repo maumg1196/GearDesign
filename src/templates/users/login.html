@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static from staticfiles %}
+{% load widget_tweaks %}
+
+{% block title %}Login{% endblock title %}
+
+{% block content %}
+  <h2>Login</h2>
+  <form action="" method="post">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="{{ form.username.id_for_label }}">Usuario <small>*</small></label>
+      {{ form.username|add_class:"form-control" }}
+      {% for error in form.username.errors %}
+        <small style="color: red">{{ error }}</small>
+      {% endfor %}
+    </div>
+    <div class="form-group">
+      <label for="{{ form.password.id_for_label }}">Contraseña <small>*</small></label>
+      {{ form.password|add_class:"form-control" }}
+      {% for error in form.password.errors %}
+        <small style="color: red">{{ error }}</small>
+      {% endfor %}
+    </div>
+    <button type="submit" class="btn btn-success">Login</button>
+  </form>
+{% endblock %}

@@ -1,13 +1,14 @@
+"""Design's Views."""
 import math
-from .forms import *
+from .forms import FirstForm
 from django.views.generic import (
     TemplateView,
     FormView,
 )
-from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class FirstView(FormView):
+class FirstView(LoginRequiredMixin, FormView):
     """This view recibe form fields and send an email."""
 
     template_name = 'first.html'
@@ -40,7 +41,7 @@ class FirstView(FormView):
         return url
 
 
-class SecondView(TemplateView):
+class SecondView(LoginRequiredMixin, TemplateView):
 
     template_name = "second.html"
 
@@ -65,6 +66,22 @@ class SecondView(TemplateView):
         C = round((Np + Ng) / (2 * Pd), 2)
         Ft = round((33000 * PD) / Vt, 2)
         F = 12 / Pd
+        if Vt < 800:
+            A = 10
+        elif 800 <= Vt < 2000:
+            A = 8
+        elif 2000 <= Vt < 4000:
+            A = 6
+        else:
+            A = 4
+        B = 0.25 ((A - 5)**0.667)
+        Cprime = 50 + (56 * (1 - B))
+        kv = round((Cprime / (Cprime + math.sqrt(Vt)))**(-B), 4)
+        if F < 1:
+            Cpf = (F / (10 * Dp)) - 0.025
+        else:
+            Cpf = (F / (10 * Dp)) - 0.0375 + (0.0125 * F)
+        Cpf = round(Cpf, 4)
         context['PD'] = PD
         context['Ng'] = Ng
         context['Dp'] = Dp
@@ -72,4 +89,7 @@ class SecondView(TemplateView):
         context['C'] = C
         context['Ft'] = Ft
         context['F'] = F
+        context['Av'] = 'A' + str(A)
+        context['kv'] = kv
+        context['Cpf'] = Cpf
         return context

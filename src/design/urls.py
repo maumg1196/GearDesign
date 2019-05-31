@@ -10,12 +10,12 @@ urlpatterns = [
     path(
         '',
         views.FirstView.as_view(),
-        name='home'
+        name='first'
     ),
     path(
         'second/',
         views.SecondView.as_view(),
-        name='home'
+        name='second'
     ),
 
 ]

@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static from staticfiles %}
+{% load widget_tweaks %}
+
+{% block title %}Registrarse{% endblock title %}
+
+{% block content %}
+  <h2>Registrarse</h2>
+  <form action="" method="post">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="{{ form.username.id_for_label }}">Usuario <small>*</small></label>
+      {{ form.username|add_class:"form-control" }}
+      {% for error in form.username.errors %}
+        <small style="color: red">{{ error }}</small>
+      {% endfor %}
+    </div>
+    <div class="form-group">
+      <label for="{{ form.first_name.id_for_label }}">Nombre</label>
+      {{ form.first_name|add_class:"form-control" }}
+      {% for error in form.first_name.errors %}
+        <small style="color: red">{{ error }}</small>
+      {% endfor %}
+    </div>
+    <div class="form-group">
+      <label for="{{ form.last_name.id_for_label }}">Apellido</label>
+      {{ form.last_name|add_class:"form-control" }}
+      {% for error in form.last_name.errors %}
+        <small style="color: red">{{ error }}</small>
+      {% endfor %}
+    </div>
+    <div class="form-group">
+      <label for="{{ form.email.id_for_label }}">Correo <small>*</small></label>
+      {{ form.email|add_class:"form-control" }}
+      {% for error in form.email.errors %}
+        <small style="color: red">{{ error }}</small>
+      {% endfor %}
+    </div>
+    <div class="form-group">
+      <label for="{{ form.password1.id_for_label }}">Contraseña <small>*</small></label>
+      {{ form.password1|add_class:"form-control" }}
+      {% for error in form.password1.errors %}
+        <small style="color: red">{{ error }}</small>
+      {% endfor %}
+    </div>
+    <div class="form-group">
+      <label for="{{ form.password2.id_for_label }}">Confimar Contraseña <small>*</small></label>
+      {{ form.password2|add_class:"form-control" }}
+      {% for error in form.password2.errors %}
+        <small style="color: red">{{ error }}</small>
+      {% endfor %}
+    </div>
+    <button type="submit" class="btn btn-success">Registrarse</button>
+  </form>
+{% endblock %}
