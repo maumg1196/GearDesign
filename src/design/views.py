@@ -34,6 +34,13 @@ class GearCreate(LoginRequiredMixin, CreateView):
         Wg = self.object.Wg
         Wp = self.object.Wp
 
+        if self.object.Np == 18.0:
+            self.object.angle = 20.0
+        elif self.object.Np == 12.0:
+            self.object.angle = 25.0
+        elif self.object.Np == 32.0:
+            self.object.angle = 14.5
+
         PotD = HP * fs
         Ng = round((Wp / Wg) * Np)
         Dp = Np / Pd
@@ -67,13 +74,13 @@ class GearCreate(LoginRequiredMixin, CreateView):
         Dep = round((Np + 2) / Pd, 4)
         Deg = round((Ng + 2) / Pd, 4)
 
-        Dg = (2 * C) / Dp
-        Drp = Dp - (2 * b)
-        Drg = Dg - (2 * b)
+        Dg = round((2 * C) / Dp, 4)
+        Drp = round(Dp - (2 * b), 4)
+        Drg = round(Dg - (2 * b), 4)
 
         ht = a + b
         hk = 2 * a
-        t = math.pi / (2 * Pd)
+        t = round(math.pi / (2 * Pd), 4)
 
         self.object.PotD = PotD
         self.object.Ng = Ng

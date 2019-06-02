@@ -17,7 +17,6 @@ class GearForm(forms.ModelForm):
         widgets = {
             'fs': forms.NumberInput(attrs={'step': "0.01"}),
             'HP': forms.NumberInput(attrs={'step': "0.01"}),
-            'Np': forms.NumberInput(attrs={'step': "0.01"}),
             'Pd': forms.NumberInput(attrs={'step': "0.01"}),
             'Wg': forms.NumberInput(attrs={'step': "0.01"}),
             'Wp': forms.NumberInput(attrs={'step': "0.01"}),

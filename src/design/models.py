@@ -6,28 +6,35 @@ from django.contrib.auth.models import User
 class Gear(models.Model):
     """Gear Design."""
 
+    Np_CHOICES = (
+        (12.0, 12.0),
+        (18.0, 18.0),
+        (32.0, 32.0),
+    )
+
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
     )
     fs = models.FloatField(
-        'factor de servicio',
+        'Factor de servicio',
         null=True,
     )
     HP = models.FloatField(
-        'potencia de motor',
+        'Potencia de motor',
         null=True,
     )
     Np = models.FloatField(
-        'dientes del piñón',
+        'Dientes del piñón',
+        choices=Np_CHOICES,
         null=True,
     )
     angle = models.FloatField(
-        'ángulo',
+        'Ángulo',
         null=True,
     )
     Pd = models.FloatField(
-        'paso diametral del engrane',
+        'Paso diametral',
         null=True,
     )
     Wg = models.FloatField(
@@ -39,35 +46,35 @@ class Gear(models.Model):
         null=True,
     )
     PotD = models.FloatField(
-        'potencia de diseño',
+        'Potencia de diseño',
         null=True,
     )
     Ng = models.FloatField(
-        'dientes del engrane',
+        'Dientes del engrane',
         null=True,
     )
     Dp = models.FloatField(
-        'paso diametral del piñón',
+        'Diametro de paso del piñón',
         null=True,
     )
     Dg = models.FloatField(
-        'paso diametral del engrane',
+        'Diametro de paso del engrane',
         null=True,
     )
     Vt = models.FloatField(
-        'velocidad tangencial',
+        'Velocidad tangencial',
         null=True,
     )
     C = models.FloatField(
-        'distancia entre centros',
+        'Distancia entre centros',
         null=True,
     )
     Ft = models.FloatField(
-        'fuerza transmitida',
+        'Fuerza transmitida',
         null=True,
     )
     F = models.FloatField(
-        'ancho de la cara',
+        'Ancho de la cara',
         null=True,
     )
     Av = models.IntegerField(
@@ -75,10 +82,19 @@ class Gear(models.Model):
         null=True,
     )
     kv = models.FloatField(
+        'Factor dinámico',
         null=True,
     )
+    kb = models.FloatField(
+        'Factor de espesor de la corona',
+        default=1.0,
+    )
+    kr = models.FloatField(
+        'Factor de confiabilidad',
+        default=1.0,
+    )
     Cpf = models.FloatField(
-        'factor de proporción del piñón',
+        'Factor de proporción del piñón',
         null=True,
     )
     addendum = models.FloatField(
