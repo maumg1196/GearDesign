@@ -50,6 +50,10 @@ class Gear(models.Model):
         'paso diametral del piñón',
         null=True,
     )
+    Dg = models.FloatField(
+        'paso diametral del engrane',
+        null=True,
+    )
     Vt = models.FloatField(
         'velocidad tangencial',
         null=True,
@@ -75,6 +79,46 @@ class Gear(models.Model):
     )
     Cpf = models.FloatField(
         'factor de proporción del piñón',
+        null=True,
+    )
+    addendum = models.FloatField(
+        'Addendum',
+        null=True,
+    )
+    dedendum = models.FloatField(
+        'Dedendum',
+        null=True,
+    )
+    clair = models.FloatField(
+        'Claro',
+        null=True,
+    )
+    Dep = models.FloatField(
+        'Diametro exterior del piñón',
+        null=True,
+    )
+    Deg = models.FloatField(
+        'Diametro exterior del engrane',
+        null=True,
+    )
+    Drp = models.FloatField(
+        'Diametro de raíz del piñón',
+        null=True,
+    )
+    Drg = models.FloatField(
+        'Diametro de raíz del engrane',
+        null=True,
+    )
+    depth_total = models.FloatField(
+        'Profunidad total',
+        null=True,
+    )
+    work_depth = models.FloatField(
+        'Profunidad de trabajo',
+        null=True,
+    )
+    t = models.FloatField(
+        'Espesor de diente',
         null=True,
     )
 

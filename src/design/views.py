@@ -9,6 +9,8 @@ from django.urls import reverse
 from django.views.generic import (
     TemplateView,
     CreateView,
+    UpdateView,
+    DetailView,
     FormView,
 )
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -39,6 +41,7 @@ class GearCreate(LoginRequiredMixin, CreateView):
         C = round((Np + Ng) / (2 * Pd), 2)
         Ft = round((33000 * PotD) / Vt, 2)
         F = 12 / Pd
+
         if Vt < 800:
             A = 10
         elif 800 <= Vt < 2000:
@@ -50,15 +53,32 @@ class GearCreate(LoginRequiredMixin, CreateView):
         B = 0.25 * ((A - 5)**0.667)
         Cprime = 50 + (56 * (1 - B))
         kv = round((Cprime / (Cprime + math.sqrt(Vt)))**(-B), 4)
+
         if F < 1:
             Cpf = (F / (10 * Dp)) - 0.025
         else:
             Cpf = (F / (10 * Dp)) - 0.0375 + (0.0125 * F)
         Cpf = round(Cpf, 4)
 
+        a = round(1 / Pd, 4)
+        b = round(1.25 / Pd, 4)
+        c = round(0.25 / Pd, 4)
+
+        Dep = round((Np + 2) / Pd, 4)
+        Deg = round((Ng + 2) / Pd, 4)
+
+        Dg = (2 * C) / Dp
+        Drp = Dp - (2 * b)
+        Drg = Dg - (2 * b)
+
+        ht = a + b
+        hk = 2 * a
+        t = math.pi / (2 * Pd)
+
         self.object.PotD = PotD
         self.object.Ng = Ng
         self.object.Dp = Dp
+        self.object.Dg = Dg
         self.object.Vt = Vt
         self.object.C = C
         self.object.Ft = Ft
@@ -66,12 +86,32 @@ class GearCreate(LoginRequiredMixin, CreateView):
         self.object.Av = A
         self.object.kv = kv
         self.object.Cpf = Cpf
+        self.object.addendum = a
+        self.object.dedendum = b
+        self.object.clair = c
+        self.object.Dep = Dep
+        self.object.Deg = Deg
+        self.object.Drp = Drp
+        self.object.Drg = Drg
+        self.object.depth_total = ht
+        self.object.work_depth = hk
+        self.object.t = t
 
         self.object.save()
         return super(GearCreate, self).form_valid(form)
 
     def get_success_url(self):
         return reverse('design:first')
+
+
+class SecondView(LoginRequiredMixin, UpdateView):
+
+    model = Gear
+    template_name = "second.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(SecondView, self).get_context_data(**kwargs)
+        return context
 
 
 class FirstView(LoginRequiredMixin, FormView):
@@ -105,57 +145,3 @@ class FirstView(LoginRequiredMixin, FormView):
             self.Wp,
         )
         return url
-
-
-class SecondView(LoginRequiredMixin, TemplateView):
-
-    template_name = "second.html"
-
-    def get_context_data(self, **kwargs):
-        context = super(SecondView, self).get_context_data(**kwargs)
-        context['fs'] = float(self.request.GET.get('fs'))
-        context['HP'] = float(self.request.GET.get('HP'))
-        context['Np'] = float(self.request.GET.get('Np'))
-        context['Pd'] = float(self.request.GET.get('Pd'))
-        context['Wg'] = float(self.request.GET.get('Wg'))
-        context['Wp'] = float(self.request.GET.get('Wp'))
-        fs = context['fs']
-        HP = context['HP']
-        Np = context['Np']
-        Pd = context['Pd']
-        Wg = context['Wg']
-        Wp = context['Wp']
-        PD = HP * fs
-        Ng = round((Wp / Wg) * Np)
-        Dp = Np / Pd
-        Vt = round((math.pi * Dp * Wp) / 12, 2)
-        C = round((Np + Ng) / (2 * Pd), 2)
-        Ft = round((33000 * PD) / Vt, 2)
-        F = 12 / Pd
-        if Vt < 800:
-            A = 10
-        elif 800 <= Vt < 2000:
-            A = 8
-        elif 2000 <= Vt < 4000:
-            A = 6
-        else:
-            A = 4
-        B = 0.25 * ((A - 5)**0.667)
-        Cprime = 50 + (56 * (1 - B))
-        kv = round((Cprime / (Cprime + math.sqrt(Vt)))**(-B), 4)
-        if F < 1:
-            Cpf = (F / (10 * Dp)) - 0.025
-        else:
-            Cpf = (F / (10 * Dp)) - 0.0375 + (0.0125 * F)
-        Cpf = round(Cpf, 4)
-        context['PD'] = PD
-        context['Ng'] = Ng
-        context['Dp'] = Dp
-        context['Vt'] = Vt
-        context['C'] = C
-        context['Ft'] = Ft
-        context['F'] = F
-        context['Av'] = 'A' + str(A)
-        context['kv'] = kv
-        context['Cpf'] = Cpf
-        return context
