@@ -12,37 +12,37 @@
           {% csrf_token %}
           <div class="row">
             <div class="col-6 form-group">
-              <label for="{{ form.fs.id_for_label }}">Módulo de elasticidad del piñón <small>*</small></label>
-              {{ form.fs|add_class:"form-control" }}
+              <label for="{{ form.Jp.id_for_label }}">Factor geométrico del piñón <small>*</small></label>
+              {{ form.Jp|add_class:"form-control" }}
               <small id="emailHelp" class="form-text text-muted">Si no sabes el factor de servicio haz click <a href="" data-toggle="modal" data-target="#FSModal">aquí.</a></small>
             </div>
             <div class="col-6 form-group">
-              <label for="{{ form.HP.id_for_label }}">Módulo de elasticidad del engrane <small>*</small></label>
-              {{ form.HP|add_class:"form-control" }}
+              <label for="{{ form.Jg.id_for_label }}">Factor geométrico del engrane <small>*</small></label>
+              {{ form.Jg|add_class:"form-control" }}
               <small id="emailHelp" class="form-text text-muted">Ingrese la cantidad en HPs</small>
             </div>
           </div>
           <div class="row">
             <div class="col-6 form-group">
-              <label for="{{ form.Np.id_for_label }}">Constante de poisson del piñón <small>*</small></label>
-              {{ form.Np|add_class:"form-control" }}
+              <label for="{{ form.I.id_for_label }}">Factor geométrico, I <small>*</small></label>
+              {{ form.I|add_class:"form-control" }}
               <small id="emailHelp" class="form-text text-muted">Si no sabes el número de dientes del piñon haz click <a href="" data-toggle="modal" data-target="#NpModal">aquí.</a></small>
             </div>
             <div class="col-6 form-group">
-              <label for="{{ form.Wp.id_for_label }}">Constante de poisson del engrane <small>*</small></label>
-              {{ form.Wp|add_class:"form-control" }}
+              <label for="{{ form.kr.id_for_label }}">Factor de Confiabilidad <small>*</small></label>
+              {{ form.kr|add_class:"form-control" }}
               <small id="emailHelp" class="form-text text-muted">Si tienes un rango pon la media</a></small>
             </div>
           </div>
           <div class="row">
             <div class="col-6 form-group">
-              <label for="{{ form.Wg.id_for_label }}">Horas del trabajo por día <small>*</small></label>
-              {{ form.Wg|add_class:"form-control" }}
+              <label for="{{ form.Ynp.id_for_label }}">Ynp <small>*</small></label>
+              {{ form.Ynp|add_class:"form-control" }}
               <small id="emailHelp" class="form-text text-muted">Si tienes un rango pon la media</a></small>
             </div>
             <div class="col-6 form-group">
-              <label for="{{ form.Pd.id_for_label }}">Aplicaciones de carga por revolución <small>*</small></label>
-              {{ form.Pd|add_class:"form-control" }}
+              <label for="{{ form.Znp.id_for_label }}">Znp <small>*</small></label>
+              {{ form.Znp|add_class:"form-control" }}
               <small id="emailHelp" class="form-text text-muted">Si no sabes el paso diametral haz click <a href="" data-toggle="modal" data-target="#PdModal">aquí.</a></small>
             </div>
           </div>

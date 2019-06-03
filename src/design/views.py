@@ -2,6 +2,7 @@
 import math
 from .forms import (
     GearForm,
+    GearForm2,
     FirstForm,
 )
 from .models import Gear
@@ -141,7 +142,6 @@ class GearCreate(LoginRequiredMixin, CreateView):
         return reverse('design:first')
 
 
-"""
 class SecondView(LoginRequiredMixin, UpdateView):
 
     model = Gear
@@ -151,7 +151,6 @@ class SecondView(LoginRequiredMixin, UpdateView):
     def get_context_data(self, **kwargs):
         context = super(SecondView, self).get_context_data(**kwargs)
         return context
-"""
 
 
 class FirstView(LoginRequiredMixin, FormView):

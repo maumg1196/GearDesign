@@ -2,81 +2,154 @@
 {% load static from staticfiles %}
 {% load widget_tweaks %}
 
-{% block title %}Diseño de Engranes{% endblock title %}
+{% block title %}Crear Engrane{% endblock title %}
 
 {% block content %}
-  <div class="card center" style="width: 80%;">
-    <div class="card-body">
-      <div class="row">
-        <div class="col-4">
-          <h3>F.S.</h3>
-          <p>{{ fs }}</p>
-        </div>
-        <div class="col-4">
-          <h3>HP del motor</h3>
-          <p>{{ HP }}</p>
-        </div>
-        <div class="col-4">
-          <h3>Paso Diametral</h3>
-          <p>{{ Pd }}</p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-4">
-          <h3>Dientes del Piñón</h3>
-          <p>{{ Np }}</p>
-        </div>
-        <div class="col-4">
-          <h3>RPMs del Engrane</h3>
-          <p>{{ Wg }}</p>
-        </div>
-        <div class="col-4">
-          <h3>RPMs del Piñón</h3>
-          <p>{{ Wp }}</p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-4">
-          <h3>Potencia de Diseño</h3>
-          <p>{{ PD }}</p>
-        </div>
-        <div class="col-4">
-          <h3>Dientes del Engrane</h3>
-          <p>{{ Ng }}</p>
-        </div>
-        <div class="col-4">
-          <h3>Paso Diametral (Piñón)</h3>
-          <p>{{ Dp }}</p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-4">
-          <h3>Velocidad Tangencial</h3>
-          <p>{{ Vt }}</p>
-        </div>
-        <div class="col-4">
-          <h3>Distancia entre Centros</h3>
-          <p>{{ C }}</p>
-        </div>
-        <div class="col-4">
-          <h3>Fuerza Transmitida</h3>
-          <p>{{ Ft }}</p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-4">
-          <h3>Ancho de la Cara</h3>
-          <p>{{ F }}</p>
-        </div>
-        <div class="col-4">
-          <h3></h3>
-          <p></p>
-        </div>
-        <div class="col-4">
-          <h3></h3>
-          <p></p>
-        </div>
+  
+    <div class="card center" style="width: 80%;">
+      <div class="card-body">
+        <form action="" method="post">
+          {% csrf_token %}
+          <div class="row">
+            <div class="col-6 form-group">
+              <label for="{{ form.Jp.id_for_label }}">Factor geométrico del piñón <small>*</small></label>
+              {{ form.Jp|add_class:"form-control" }}
+              <small id="emailHelp" class="form-text text-muted">Si no sabes el factor de servicio haz click <a href="" data-toggle="modal" data-target="#FSModal">aquí.</a></small>
+            </div>
+            <div class="col-6 form-group">
+              <label for="{{ form.Jg.id_for_label }}">Factor geométrico del engrane <small>*</small></label>
+              {{ form.Jg|add_class:"form-control" }}
+              <small id="emailHelp" class="form-text text-muted">Ingrese la cantidad en HPs</small>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6 form-group">
+              <label for="{{ form.I.id_for_label }}">Factor geométrico, I <small>*</small></label>
+              {{ form.I|add_class:"form-control" }}
+              <small id="emailHelp" class="form-text text-muted">Si no sabes el número de dientes del piñon haz click <a href="" data-toggle="modal" data-target="#NpModal">aquí.</a></small>
+            </div>
+            <div class="col-6 form-group">
+              <label for="{{ form.kr.id_for_label }}">Factor de Confiabilidad <small>*</small></label>
+              {{ form.kr|add_class:"form-control" }}
+              <small id="emailHelp" class="form-text text-muted">Si tienes un rango pon la media</a></small>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6 form-group">
+              <label for="{{ form.Ynp.id_for_label }}">Ynp <small>*</small></label>
+              {{ form.Ynp|add_class:"form-control" }}
+              <small id="emailHelp" class="form-text text-muted">Si tienes un rango pon la media</a></small>
+            </div>
+            <div class="col-6 form-group">
+              <label for="{{ form.Znp.id_for_label }}">Znp <small>*</small></label>
+              {{ form.Znp|add_class:"form-control" }}
+              <small id="emailHelp" class="form-text text-muted">Si no sabes el paso diametral haz click <a href="" data-toggle="modal" data-target="#PdModal">aquí.</a></small>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-success">Calcular</button>
+        </form>
       </div>
     </div>
   </div>
+
+  <!-- Modal fs -->
+  <div class="modal" id="FSModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Factor de Servicio</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+          <img src="{% static "img/fs_table.jpeg" %}" class="img-thumbnail">
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Np -->
+  <div class="modal" id="NpModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Número de dientes del Piñón</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Angulo de Presión</th>
+                <th scope="col"># de Dientes</th>
+                <th scope="col">Recomendado</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>14.5</td>
+                <td>32</td>
+                <td><i class="fas fa-times-circle"></i></td>
+              </tr>
+              <tr>
+                <td>20</td>
+                <td>18</td>
+                <td><i class="fas fa-check-circle"></i><i class="fas fa-check-circle"></i></td>
+              </tr>
+              <tr>
+                <td>25</td>
+                <td>12</td>
+                <td><i class="fas fa-check-circle"></i></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal fs -->
+  <div class="modal" id="PdModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Factor de Servicio</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+          <img src="{% static "img/Pd_table.jpeg" %}" class="img-thumbnail">
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
 {% endblock content %}

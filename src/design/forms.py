@@ -56,35 +56,98 @@ class GearForm(forms.ModelForm):
         }
 
 
+class GearForm2(forms.ModelForm):
+
+    Ynp_choices = (
+        (1, 1),
+        (2, 2),
+        (3, 3),
+        (4, 4),
+        (5, 5),
+        (6, 6),
+    )
+
+    Znp_choices = (
+        (1, 1),
+        (2, 2),
+        (3, 3),
+    )
+
+    Ynp = forms.ChoiceField(
+        required=True,
+        choices=Ynp_choices,
+    )
+    Znp = forms.ChoiceField(
+        required=True,
+        choices=Znp_choices,
+    )
+
+    class Meta:
+        model = Gear
+        fields = [
+            'Jp',
+            'Jg',
+            'I',
+            'kr',
+            'SF',
+        ]
+        widgets = {
+            'Jp': forms.NumberInput(attrs={'step': "0.01"}),
+            'Jg': forms.NumberInput(attrs={'step': "0.01"}),
+            'I': forms.NumberInput(attrs={'step': "0.01"}),
+            'kr': forms.NumberInput(attrs={'step': "0.01"}),
+            'SF': forms.NumberInput(attrs={'step': "0.01"}),
+        }
+
+
 class FirstForm(forms.Form):
 
-    fs = forms.FloatField(
+    Ynp_choices = (
+        (1, 1),
+        (2, 2),
+        (3, 3),
+        (4, 4),
+        (5, 5),
+        (6, 6),
+    )
+
+    Znp_choices = (
+        (1, 1),
+        (2, 2),
+        (3, 3),
+    )
+
+    Jp = forms.FloatField(
         required=True,
         min_value=0.01,
         widget=forms.NumberInput(attrs={'step': "0.01"})
     )
-    HP = forms.FloatField(
+    Jg = forms.FloatField(
         required=True,
         min_value=0.01,
         widget=forms.NumberInput(attrs={'step': "0.01"})
     )
-    Np = forms.FloatField(
+    I = forms.FloatField(
         required=True,
         min_value=0.01,
         widget=forms.NumberInput(attrs={'step': "0.01"})
     )
-    Pd = forms.FloatField(
+    kr = forms.FloatField(
         required=True,
         min_value=0.01,
         widget=forms.NumberInput(attrs={'step': "0.01"})
     )
-    Wg = forms.FloatField(
+    SF = forms.FloatField(
         required=True,
-        min_value=0.01,
+        min_value=1.00,
+        max_value=1.50,
         widget=forms.NumberInput(attrs={'step': "0.01"})
     )
-    Wp = forms.FloatField(
+    Ynp = forms.ChoiceField(
         required=True,
-        min_value=0.01,
-        widget=forms.NumberInput(attrs={'step': "0.01"})
+        choices=Ynp_choices,
+    )
+    Znp = forms.ChoiceField(
+        required=True,
+        choices=Znp_choices,
     )

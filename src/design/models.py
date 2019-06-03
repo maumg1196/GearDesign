@@ -85,12 +85,28 @@ class Gear(models.Model):
         'Calidad',
         null=True,
     )
+    Jp = models.FloatField(
+        'Factor geométrico del piñón',
+        null=True,
+    )
+    Jg = models.FloatField(
+        'Factor geométrico del engrane',
+        null=True,
+    )
+    I = models.FloatField(
+        'Factor geométrico',
+        null=True,
+    )
     kv = models.FloatField(
         'Factor dinámico',
         null=True,
     )
     kb = models.FloatField(
         'Factor de espesor de la corona',
+        default=1.0,
+    )
+    SF = models.FloatField(
+        'Factor de seguridad',
         default=1.0,
     )
     kr = models.FloatField(
@@ -185,6 +201,13 @@ class Gear(models.Model):
         'Vida del engrane en ciclos',
         null=True,
     )
+    Ynp = models.FloatField(
+        null=True,
+    )
+    Znp = models.FloatField(
+        null=True,
+    )
+
 
     class Meta:
         verbose_name = "Gear"

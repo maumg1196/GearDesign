@@ -17,5 +17,10 @@ urlpatterns = [
         views.GearCreate.as_view(),
         name='create'
     ),
+    path(
+        'create/<int:gear_id>/',
+        views.SecondView.as_view(),
+        name='continue'
+    ),
 
 ]
