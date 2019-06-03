@@ -61,6 +61,10 @@ class Gear(models.Model):
         'Diametro de paso del engrane',
         null=True,
     )
+    P = models.FloatField(
+        'Paso circular',
+        null=True,
+    )
     Vt = models.FloatField(
         'Velocidad tangencial',
         null=True,
@@ -165,6 +169,14 @@ class Gear(models.Model):
         'Espesor de diente',
         null=True,
     )
+    Dbp = models.FloatField(
+        'Diametro de círculo base del piñón',
+        null=True,
+    )
+    Dbg = models.FloatField(
+        'Diametro de círculo base del engrane',
+        null=True,
+    )
     Ep = models.FloatField(
         'Módulo de elasticidad del piñón',
         null=True,
@@ -207,7 +219,6 @@ class Gear(models.Model):
     Znp = models.FloatField(
         null=True,
     )
-
 
     class Meta:
         verbose_name = "Gear"

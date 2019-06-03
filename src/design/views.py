@@ -41,6 +41,8 @@ class GearCreate(LoginRequiredMixin, CreateView):
         Vp = self.object.Vp
         Vg = self.object.Vg
 
+        P = round(math.pi / Pd, 4)
+
         if Pd >= 5:
             self.object.ks = 1.0
         elif 4 <= Pd < 5:
@@ -58,6 +60,8 @@ class GearCreate(LoginRequiredMixin, CreateView):
             self.object.angle = 25.0
         elif self.object.Np == 32.0:
             self.object.angle = 14.5
+
+        angle = self.object.angle
 
         PotD = HP * fs
         Ng = round((Wp / Wg) * Np)
@@ -105,9 +109,12 @@ class GearCreate(LoginRequiredMixin, CreateView):
         hk = 2 * a
         t = round(math.pi / (2 * Pd), 4)
 
-        L = hrs*365*5
-        Ncp = 60*L*q*Wp
-        Ncg = 60*L*q*Wg
+        L = hrs * 365 * 5
+        Ncp = 60 * L * q * Wp
+        Ncg = 60 * L * q * Wg
+
+        Dbp = round(Dp * math.cos(angle), 4)
+        Dbg = round(Dg * math.cos(angle), 4)
 
         self.object.PotD = PotD
         self.object.Ng = Ng
@@ -117,6 +124,7 @@ class GearCreate(LoginRequiredMixin, CreateView):
         self.object.C = C
         self.object.Ft = Ft
         self.object.F = F
+        self.object.P = P
         self.object.Cp = Cp
         self.object.Av = A
         self.object.kv = kv
@@ -131,6 +139,8 @@ class GearCreate(LoginRequiredMixin, CreateView):
         self.object.depth_total = ht
         self.object.work_depth = hk
         self.object.t = t
+        self.object.Dbp = Dbp
+        self.object.Dbg = Dbg
         self.object.L = L
         self.object.Ncp = Ncp
         self.object.Ncg = Ncg
