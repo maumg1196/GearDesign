@@ -192,11 +192,12 @@ class SecondView(LoginRequiredMixin, UpdateView):
         self.object.Ynp = round(Ynp, 4)
 
         if Znp_choice == 1:
-            pass
+            Znp = 2.466 * (self.object.Ncp**-0.056)
         elif Znp_choice == 2:
-            pass
+            Znp = 1.249 * (self.object.Ncp**-0.0138)
         elif Znp_choice == 3:
-            pass
+            Znp = 1.4488 * (self.object.Ncp**-0.023)
+        self.object.Znp = round(Znp, 4)
 
         return super(SecondView, self).form_valid(form)
 
