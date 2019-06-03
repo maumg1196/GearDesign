@@ -177,25 +177,25 @@ class SecondView(LoginRequiredMixin, UpdateView):
             Cma = 0.0380 + (0.0102 * self.object.F) - (0.822 * (10**-4) * (self.object.F ** 2))
         self.object.Cma = round(Cma, 4)
 
-        if Ynp_choice == 1:
+        if Ynp_choice == '1':
             Ynp = 9.4518 * (self.object.Ncp**-0.148)
-        elif Ynp_choice == 2:
+        elif Ynp_choice == '2':
             Ynp = 6.1514 * (self.object.Ncp**-0.1192)
-        elif Ynp_choice == 3:
+        elif Ynp_choice == '3':
             Ynp = 4.9404 * (self.object.Ncp**-0.1045)
-        elif Ynp_choice == 4:
+        elif Ynp_choice == '4':
             Ynp = 3.517 * (self.object.Ncp**-0.0817)
-        elif Ynp_choice == 5:
+        elif Ynp_choice == '5':
             Ynp = 2.3194 * (self.object.Ncp**-0.0538)
-        elif Ynp_choice == 6:
+        elif Ynp_choice == '6':
             Ynp = 1.3558 * (self.object.Ncp**-0.0178)
         self.object.Ynp = round(Ynp, 4)
 
-        if Znp_choice == 1:
+        if Znp_choice == '1':
             Znp = 2.466 * (self.object.Ncp**-0.056)
-        elif Znp_choice == 2:
+        elif Znp_choice == '2':
             Znp = 1.249 * (self.object.Ncp**-0.0138)
-        elif Znp_choice == 3:
+        elif Znp_choice == '3':
             Znp = 1.4488 * (self.object.Ncp**-0.023)
         self.object.Znp = round(Znp, 4)
 
