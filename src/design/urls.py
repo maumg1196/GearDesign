@@ -17,10 +17,5 @@ urlpatterns = [
         views.GearCreate.as_view(),
         name='create'
     ),
-    path(
-        'engrane/2/<int:gear_id>/',
-        views.SecondView.as_view(),
-        name='second'
-    ),
 
 ]

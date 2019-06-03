@@ -77,6 +77,10 @@ class Gear(models.Model):
         'Ancho de la cara',
         null=True,
     )
+    Cp = models.FloatField(
+        'Constante de elasticidad',
+        null=True,
+    )
     Av = models.IntegerField(
         'Calidad',
         null=True,
@@ -91,6 +95,14 @@ class Gear(models.Model):
     )
     kr = models.FloatField(
         'Factor de confiabilidad',
+        default=1.0,
+    )
+    ks = models.FloatField(
+        'Factor de tamaño',
+        null=True,
+    )
+    SF = models.FloatField(
+        'Factor de seguridad',
         default=1.0,
     )
     Cpf = models.FloatField(
@@ -135,6 +147,42 @@ class Gear(models.Model):
     )
     t = models.FloatField(
         'Espesor de diente',
+        null=True,
+    )
+    Ep = models.FloatField(
+        'Módulo de elasticidad del piñón',
+        null=True,
+    )
+    Eg = models.FloatField(
+        'Módulo de elasticidad del engrane',
+        null=True,
+    )
+    Vp = models.FloatField(
+        'Cte de poison del piñón',
+        null=True,
+    )
+    Vg = models.FloatField(
+        'Cte de poison del engrane',
+        null=True,
+    )
+    hrs = models.FloatField(
+        'Horas de trabajo por día',
+        null=True,
+    )
+    L = models.FloatField(
+        'Vida del componente',
+        null=True,
+    )
+    q = models.FloatField(
+        'Aplicaciones de carga por rev',
+        null=True,
+    )
+    Ncp = models.FloatField(
+        'Vida del piñón en ciclos',
+        null=True,
+    )
+    Ncg = models.FloatField(
+        'Vida del engrane en ciclos',
         null=True,
     )
 

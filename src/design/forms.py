@@ -23,6 +23,39 @@ class GearForm(forms.ModelForm):
         }
 
 
+class GearForm(forms.ModelForm):
+
+    class Meta:
+        model = Gear
+        fields = [
+            'fs',
+            'HP',
+            'Np',
+            'Pd',
+            'Wg',
+            'Wp',
+            'q',
+            'hrs',
+            'Ep',
+            'Eg',
+            'Vp',
+            'Vg',
+        ]
+        widgets = {
+            'fs': forms.NumberInput(attrs={'step': "0.01"}),
+            'HP': forms.NumberInput(attrs={'step': "0.01"}),
+            'Pd': forms.NumberInput(attrs={'step': "0.01"}),
+            'Wg': forms.NumberInput(attrs={'step': "0.01"}),
+            'Wp': forms.NumberInput(attrs={'step': "0.01"}),
+            'hrs': forms.NumberInput(attrs={'step': "0.01"}),
+            'q': forms.NumberInput(attrs={'step': "0.01"}),
+            'Ep': forms.NumberInput(attrs={'step': "0.01"}),
+            'Eg': forms.NumberInput(attrs={'step': "0.01"}),
+            'Vp': forms.NumberInput(attrs={'step': "0.01"}),
+            'Vg': forms.NumberInput(attrs={'step': "0.01"}),
+        }
+
+
 class FirstForm(forms.Form):
 
     fs = forms.FloatField(

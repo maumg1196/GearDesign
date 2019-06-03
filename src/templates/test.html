@@ -11,71 +11,39 @@
         <form action="" method="post">
           {% csrf_token %}
           <div class="row">
-            <div class="col-4 form-group">
-              <label for="{{ form.fs.id_for_label }}">Factor de Servicio <small>*</small></label>
+            <div class="col-6 form-group">
+              <label for="{{ form.fs.id_for_label }}">Módulo de elasticidad del piñón <small>*</small></label>
               {{ form.fs|add_class:"form-control" }}
               <small id="emailHelp" class="form-text text-muted">Si no sabes el factor de servicio haz click <a href="" data-toggle="modal" data-target="#FSModal">aquí.</a></small>
             </div>
-            <div class="col-4 form-group">
-              <label for="{{ form.HP.id_for_label }}">Potencia de Motor <small>*</small></label>
+            <div class="col-6 form-group">
+              <label for="{{ form.HP.id_for_label }}">Módulo de elasticidad del engrane <small>*</small></label>
               {{ form.HP|add_class:"form-control" }}
               <small id="emailHelp" class="form-text text-muted">Ingrese la cantidad en HPs</small>
             </div>
-            <div class="col-4 form-group">
-              <label for="{{ form.Np.id_for_label }}">Número de dientes del Piñón <small>*</small></label>
+          </div>
+          <div class="row">
+            <div class="col-6 form-group">
+              <label for="{{ form.Np.id_for_label }}">Constante de poisson del piñón <small>*</small></label>
               {{ form.Np|add_class:"form-control" }}
               <small id="emailHelp" class="form-text text-muted">Si no sabes el número de dientes del piñon haz click <a href="" data-toggle="modal" data-target="#NpModal">aquí.</a></small>
             </div>
-          </div>
-          <div class="row">
-            <div class="col-4 form-group">
-              <label for="{{ form.Wp.id_for_label }}">RPMs del Piñón <small>*</small></label>
+            <div class="col-6 form-group">
+              <label for="{{ form.Wp.id_for_label }}">Constante de poisson del engrane <small>*</small></label>
               {{ form.Wp|add_class:"form-control" }}
               <small id="emailHelp" class="form-text text-muted">Si tienes un rango pon la media</a></small>
             </div>
-            <div class="col-4 form-group">
-              <label for="{{ form.Wg.id_for_label }}">RPMs del Engrane <small>*</small></label>
+          </div>
+          <div class="row">
+            <div class="col-6 form-group">
+              <label for="{{ form.Wg.id_for_label }}">Horas del trabajo por día <small>*</small></label>
               {{ form.Wg|add_class:"form-control" }}
               <small id="emailHelp" class="form-text text-muted">Si tienes un rango pon la media</a></small>
             </div>
-            <div class="col-4 form-group">
-              <label for="{{ form.Pd.id_for_label }}">Paso Diametral <small>*</small></label>
+            <div class="col-6 form-group">
+              <label for="{{ form.Pd.id_for_label }}">Aplicaciones de carga por revolución <small>*</small></label>
               {{ form.Pd|add_class:"form-control" }}
               <small id="emailHelp" class="form-text text-muted">Si no sabes el paso diametral haz click <a href="" data-toggle="modal" data-target="#PdModal">aquí.</a></small>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-4 form-group">
-              <label for="{{ form.hrs.id_for_label }}">Horas por días <small>*</small></label>
-              {{ form.hrs|add_class:"form-control" }}
-              <small id="emailHelp" class="form-text text-muted">Horas de trabajo por día</a></small>
-            </div>
-            <div class="col-4 form-group">
-              <label for="{{ form.q.id_for_label }}">No. de Aplicaciones <small>*</small></label>
-              {{ form.q|add_class:"form-control" }}
-              <small id="emailHelp" class="form-text text-muted">Número de aplicaciones de carga por revolución.</small>
-            </div>
-            <div class="col-4 form-group">
-              <label for="{{ form.Ep.id_for_label }}">Módulo de elasticidad del piñón <small>*</small></label>
-              {{ form.Ep|add_class:"form-control" }}
-              <small id="emailHelp" class="form-text text-muted">Si no sabes el factor de servicio haz click <a href="" data-toggle="modal" data-target="#FSModal">aquí.</a></small>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-4 form-group">
-              <label for="{{ form.Eg.id_for_label }}">Módulo de elasticidad del engrane <small>*</small></label>
-              {{ form.Eg|add_class:"form-control" }}
-              <small id="emailHelp" class="form-text text-muted">Ingrese la cantidad en HPs</small>
-            </div>
-            <div class="col-4 form-group">
-              <label for="{{ form.Vp.id_for_label }}">Constante de poisson del piñón <small>*</small></label>
-              {{ form.Vp|add_class:"form-control" }}
-              <small id="emailHelp" class="form-text text-muted">Si no sabes el número de dientes del piñon haz click <a href="" data-toggle="modal" data-target="#NpModal">aquí.</a></small>
-            </div>
-            <div class="col-4 form-group">
-              <label for="{{ form.Vg.id_for_label }}">Constante de poisson del engrane <small>*</small></label>
-              {{ form.Vg|add_class:"form-control" }}
-              <small id="emailHelp" class="form-text text-muted">Si tienes un rango pon la media</a></small>
             </div>
           </div>
           <button type="submit" class="btn btn-success">Calcular</button>

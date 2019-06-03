@@ -33,6 +33,23 @@ class GearCreate(LoginRequiredMixin, CreateView):
         Pd = self.object.Pd
         Wg = self.object.Wg
         Wp = self.object.Wp
+        hrs = self.object.hrs
+        q = self.object.q
+        Ep = self.object.Ep
+        Eg = self.object.Eg
+        Vp = self.object.Vp
+        Vg = self.object.Vg
+
+        if Pd >= 5:
+            self.object.ks = 1.0
+        elif 4 <= Pd < 5:
+            self.object.ks = 1.05
+        elif 3 <= Pd < 4:
+            self.object.ks = 1.15
+        elif 2 <= Pd < 3:
+            self.object.ks = 1.25
+        elif 1.25 <= Pd < 2:
+            self.object.ks = 1.40
 
         if self.object.Np == 18.0:
             self.object.angle = 20.0
@@ -48,6 +65,11 @@ class GearCreate(LoginRequiredMixin, CreateView):
         C = round((Np + Ng) / (2 * Pd), 2)
         Ft = round((33000 * PotD) / Vt, 2)
         F = 12 / Pd
+
+        ctecpp = (1 - (Vp**2)) / Ep
+        ctecpg = (1 - (Vg**2)) / Eg
+        denom = math.pi * (ctecpp + ctecpg)
+        Cp = math.sqrt(1 / denom)
 
         if Vt < 800:
             A = 10
@@ -82,6 +104,10 @@ class GearCreate(LoginRequiredMixin, CreateView):
         hk = 2 * a
         t = round(math.pi / (2 * Pd), 4)
 
+        L = hrs*365*5
+        Ncp = 60*L*q*Wp
+        Ncg = 60*L*q*Wg
+
         self.object.PotD = PotD
         self.object.Ng = Ng
         self.object.Dp = Dp
@@ -90,6 +116,7 @@ class GearCreate(LoginRequiredMixin, CreateView):
         self.object.C = C
         self.object.Ft = Ft
         self.object.F = F
+        self.object.Cp = Cp
         self.object.Av = A
         self.object.kv = kv
         self.object.Cpf = Cpf
@@ -103,6 +130,9 @@ class GearCreate(LoginRequiredMixin, CreateView):
         self.object.depth_total = ht
         self.object.work_depth = hk
         self.object.t = t
+        self.object.L = L
+        self.object.Ncp = Ncp
+        self.object.Ncg = Ncg
 
         self.object.save()
         return super(GearCreate, self).form_valid(form)
@@ -111,20 +141,23 @@ class GearCreate(LoginRequiredMixin, CreateView):
         return reverse('design:first')
 
 
+"""
 class SecondView(LoginRequiredMixin, UpdateView):
 
     model = Gear
+    form_class = GearForm2
     template_name = "second.html"
 
     def get_context_data(self, **kwargs):
         context = super(SecondView, self).get_context_data(**kwargs)
         return context
+"""
 
 
 class FirstView(LoginRequiredMixin, FormView):
     """This view recibe form fields and send an email."""
 
-    template_name = 'first.html'
+    template_name = 'test.html'
     form_class = FirstForm
     fs = ""
     HP = ""
