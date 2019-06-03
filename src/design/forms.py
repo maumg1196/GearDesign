@@ -13,27 +13,6 @@ class GearForm(forms.ModelForm):
             'Pd',
             'Wg',
             'Wp',
-        ]
-        widgets = {
-            'fs': forms.NumberInput(attrs={'step': "0.01"}),
-            'HP': forms.NumberInput(attrs={'step': "0.01"}),
-            'Pd': forms.NumberInput(attrs={'step': "0.01"}),
-            'Wg': forms.NumberInput(attrs={'step': "0.01"}),
-            'Wp': forms.NumberInput(attrs={'step': "0.01"}),
-        }
-
-
-class GearForm(forms.ModelForm):
-
-    class Meta:
-        model = Gear
-        fields = [
-            'fs',
-            'HP',
-            'Np',
-            'Pd',
-            'Wg',
-            'Wp',
             'q',
             'hrs',
             'Ep',
@@ -73,6 +52,13 @@ class GearForm2(forms.ModelForm):
         (3, 3),
     )
 
+    aligment_choices = (
+        ('Open gearing', 'Open gearing'),
+        ('Commercial enclosed gear units', 'Commercial enclosed gear units'),
+        ('Precision enclosed gear units', 'Precision enclosed gear units'),
+        ('Extra-precision enclosed gear units', 'Extra-precision enclosed gear units'),
+    )
+
     Ynp = forms.ChoiceField(
         required=True,
         choices=Ynp_choices,
@@ -80,6 +66,10 @@ class GearForm2(forms.ModelForm):
     Znp = forms.ChoiceField(
         required=True,
         choices=Znp_choices,
+    )
+    aligment_type = forms.ChoiceField(
+        required=True,
+        choices=aligment_choices,
     )
 
     class Meta:

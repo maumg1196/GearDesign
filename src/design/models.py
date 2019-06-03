@@ -121,12 +121,20 @@ class Gear(models.Model):
         'Factor de tamaño',
         null=True,
     )
+    km = models.FloatField(
+        'Factor de distribución de carga',
+        null=True,
+    )
     SF = models.FloatField(
         'Factor de seguridad',
         default=1.0,
     )
     Cpf = models.FloatField(
         'Factor de proporción del piñón',
+        null=True,
+    )
+    Cma = models.FloatField(
+        'Factor de alineación',
         null=True,
     )
     addendum = models.FloatField(

@@ -66,9 +66,10 @@ class GearCreate(LoginRequiredMixin, CreateView):
         PotD = HP * fs
         Ng = round((Wp / Wg) * Np)
         Dp = Np / Pd
-        Vt = round((math.pi * Dp * Wp) / 12, 2)
-        C = round((Np + Ng) / (2 * Pd), 2)
-        Ft = round((33000 * PotD) / Vt, 2)
+        Dg = Ng / Pd
+        Vt = round((math.pi * Dp * Wp) / 12, 4)
+        C = round((Np + Ng) / (2 * Pd), 4)
+        Ft = round((33000 * PotD) / Vt, 4)
         F = 12 / Pd
 
         ctecpp = (1 - (Vp**2)) / Ep
@@ -101,7 +102,6 @@ class GearCreate(LoginRequiredMixin, CreateView):
         Dep = round((Np + 2) / Pd, 4)
         Deg = round((Ng + 2) / Pd, 4)
 
-        Dg = round((2 * C) / Dp, 4)
         Drp = round(Dp - (2 * b), 4)
         Drg = round(Dg - (2 * b), 4)
 
@@ -113,8 +113,8 @@ class GearCreate(LoginRequiredMixin, CreateView):
         Ncp = 60 * L * q * Wp
         Ncg = 60 * L * q * Wg
 
-        Dbp = round(Dp * math.cos(angle), 4)
-        Dbg = round(Dg * math.cos(angle), 4)
+        Dbp = round(Dp * math.cos(math.radians(angle)), 4)
+        Dbg = round(Dg * math.cos(math.radians(angle)), 4)
 
         self.object.PotD = PotD
         self.object.Ng = Ng
@@ -149,18 +149,59 @@ class GearCreate(LoginRequiredMixin, CreateView):
         return super(GearCreate, self).form_valid(form)
 
     def get_success_url(self):
-        return reverse('design:first')
+        return reverse('design:continue', kwargs={'gear_id': self.object.id})
 
 
 class SecondView(LoginRequiredMixin, UpdateView):
 
     model = Gear
     form_class = GearForm2
+    pk_url_kwarg = 'gear_id'
+    context_object_name = 'gear'
     template_name = "second.html"
 
-    def get_context_data(self, **kwargs):
-        context = super(SecondView, self).get_context_data(**kwargs)
-        return context
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+
+        Ynp_choice = form.cleaned_data['Ynp']
+        Znp_choice = form.cleaned_data['Znp']
+        aligment_type_choice = form.cleaned_data['aligment_type']
+
+        if aligment_type_choice == 'Open gearing':
+            Cma = 0.247 + (0.0167 * self.object.F) - (0.765 * (10**-4) * (self.object.F ** 2))
+        elif aligment_type_choice == 'Commercial enclosed gear units':
+            Cma = 0.127 + (0.0158 * self.object.F) - (1.093 * (10**-4) * (self.object.F ** 2))
+        elif aligment_type_choice == 'Precision enclosed gear units':
+            Cma = 0.0657 + (0.0128 * self.object.F) - (0.926 * (10**-4) * (self.object.F ** 2))
+        elif aligment_type_choice == 'Extra-precision enclosed gear units':
+            Cma = 0.0380 + (0.0102 * self.object.F) - (0.822 * (10**-4) * (self.object.F ** 2))
+        self.object.Cma = round(Cma, 4)
+
+        if Ynp_choice == 1:
+            Ynp = 9.4518 * (self.object.Ncp**-0.148)
+        elif Ynp_choice == 2:
+            Ynp = 6.1514 * (self.object.Ncp**-0.1192)
+        elif Ynp_choice == 3:
+            Ynp = 4.9404 * (self.object.Ncp**-0.1045)
+        elif Ynp_choice == 4:
+            Ynp = 3.517 * (self.object.Ncp**-0.0817)
+        elif Ynp_choice == 5:
+            Ynp = 2.3194 * (self.object.Ncp**-0.0538)
+        elif Ynp_choice == 6:
+            Ynp = 1.3558 * (self.object.Ncp**-0.0178)
+        self.object.Ynp = round(Ynp, 4)
+
+        if Znp_choice == 1:
+            pass
+        elif Znp_choice == 2:
+            pass
+        elif Znp_choice == 3:
+            pass
+
+        return super(SecondView, self).form_valid(form)
+
+    def get_success_url(self):
+        return reverse('design:first')
 
 
 class FirstView(LoginRequiredMixin, FormView):
