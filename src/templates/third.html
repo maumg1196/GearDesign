@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% load static from staticfiles %}
+{% load widget_tweaks %}
+
+{% block title %}Crear Engrane{% endblock title %}
+
+{% block content %}
+  
+    <div class="card center" style="width: 80%;">
+      <div class="card-body">
+        <a href="" data-toggle="modal" data-target="#T1Modal">Tabla 1</a> / <a href="" data-toggle="modal" data-target="#T2Modal">Tabla 2</a>
+        <form action="" method="post">
+          {% csrf_token %}
+          <div class="row">
+            <div class="col-6 form-group">
+              <label for="{{ form.materialp.id_for_label }}">Material del Piñón <small>*</small></label>
+              {{ form.materialp|add_class:"form-control" }}
+              <small id="emailHelp" class="form-text text-muted">Haz click para ver las tablas de recomendaciones</small>
+            </div>
+            <div class="col-6 form-group">
+              <label for="{{ form.materialg.id_for_label }}">Material del Engrane <small>*</small></label>
+              {{ form.materialg|add_class:"form-control" }}
+              <small id="emailHelp" class="form-text text-muted">Haz click para ver las tablas de recomendaciones</small>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-success">Terminar</button>
+        </form>
+      </div>
+    </div>
+
+  <!-- Modal fs -->
+  <div class="modal" id="T1Modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">1er Tabla de Recpmendaciones</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+          <p>Dureza Brinell del piñón: {{ gear.HBp }}</p>
+          <p>Dureza Brinell del engrane: {{ gear.HBg }}</p>
+          <img src="{% static "img/material1.jpeg" %}" class="img-thumbnail">
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal fs -->
+  <div class="modal" id="T2Modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">2da Tabla de Recpmendaciones</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+          <p>Dureza Brinell del piñón: {{ gear.HBp }}</p>
+          <p>Dureza Brinell del engrane: {{ gear.HBg }}</p>
+          <img src="{% static "img/material2.jpeg" %}" class="img-thumbnail">
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+{% endblock content %}

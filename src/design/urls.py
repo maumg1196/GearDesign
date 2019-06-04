@@ -32,5 +32,10 @@ urlpatterns = [
         views.SecondView.as_view(),
         name='continue'
     ),
+    path(
+        'create/<int:gear_id>/final/',
+        views.FinalUpdate.as_view(),
+        name='final'
+    ),
 
 ]

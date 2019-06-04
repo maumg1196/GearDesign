@@ -262,6 +262,24 @@ class Gear(models.Model):
         'Esfuerzo de contacto ajustado en el engrane',
         null=True,
     )
+    HBp = models.FloatField(
+        'Dureza Brinell para el piñón',
+        null=True,
+    )
+    HBg = models.FloatField(
+        'Dureza Brinell para el engrane',
+        null=True,
+    )
+    materialp = models.CharField(
+        'Material del piñón',
+        max_length=100,
+        null=True,
+    )
+    materialg = models.CharField(
+        'Material del engrane',
+        max_length=100,
+        null=True,
+    )
 
     class Meta:
         verbose_name = "Gear"

@@ -3,7 +3,7 @@ import math
 from .forms import (
     GearForm,
     GearForm2,
-    FirstForm,
+    GearForm3,
 )
 from .models import Gear
 from django.urls import reverse
@@ -253,11 +253,22 @@ class SecondView(LoginRequiredMixin, UpdateView):
         self.object.HBp = round(HBp, 4)
         self.object.HBg = round(HBg, 4)
 
-
         return super(SecondView, self).form_valid(form)
 
     def get_success_url(self):
-        return reverse('design:first')
+        return reverse('design:final', args=[self.object.id])
+
+
+class FinalUpdate(LoginRequiredMixin, UpdateView):
+
+    model = Gear
+    form_class = GearForm3
+    pk_url_kwarg = 'gear_id'
+    context_object_name = 'gear'
+    template_name = 'third.html'
+
+    def get_success_url(self):
+        return self.object.get_absolute_url()
 
 
 class GearDetail(LoginRequiredMixin, DetailView):

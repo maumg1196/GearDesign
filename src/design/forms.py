@@ -98,54 +98,11 @@ class GearForm2(forms.ModelForm):
         }
 
 
-class FirstForm(forms.Form):
-
-    Ynp_choices = (
-        (1, 1),
-        (2, 2),
-        (3, 3),
-        (4, 4),
-        (5, 5),
-        (6, 6),
-    )
-
-    Znp_choices = (
-        (1, 1),
-        (2, 2),
-        (3, 3),
-    )
-
-    Jp = forms.FloatField(
-        required=True,
-        min_value=0.01,
-        widget=forms.NumberInput(attrs={'step': "0.01"})
-    )
-    Jg = forms.FloatField(
-        required=True,
-        min_value=0.01,
-        widget=forms.NumberInput(attrs={'step': "0.01"})
-    )
-    I = forms.FloatField(
-        required=True,
-        min_value=0.01,
-        widget=forms.NumberInput(attrs={'step': "0.01"})
-    )
-    kr = forms.FloatField(
-        required=True,
-        min_value=0.01,
-        widget=forms.NumberInput(attrs={'step': "0.01"})
-    )
-    SF = forms.FloatField(
-        required=True,
-        min_value=1.00,
-        max_value=1.50,
-        widget=forms.NumberInput(attrs={'step': "0.01"})
-    )
-    Ynp = forms.ChoiceField(
-        required=True,
-        choices=Ynp_choices,
-    )
-    Znp = forms.ChoiceField(
-        required=True,
-        choices=Znp_choices,
-    )
+class GearForm3(forms.ModelForm):
+    
+    class Meta:
+        model = Gear
+        fields = [
+            'materialp',
+            'materialg'
+        ]
