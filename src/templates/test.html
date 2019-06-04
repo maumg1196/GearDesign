@@ -32,6 +32,7 @@
           </div>
           <div class="col-4">
             <ul>
+              <li>Ancho de la cara: {{ gear.F }}</li>
               <li>Diametro exterior del piñón: {{ gear.Dep }}in</li>
               <li>Diametro exterior del engrane: {{ gear.Deg }}in</li>
               <li>Diametro de raíz para el piñón: {{ gear.Drp }}in</li>
@@ -65,7 +66,7 @@
               <li>Potencia de diseño: {{ gear.PotD }}</li>
               <li>Velocidad tangencial: {{ gear.Vt }}</li>
               <li>Fuerza transmitida: {{ gear.Ft }}</li>
-              <li>Ancho de la cara: {{ gear.F }}</li>
+              <li>Relación de velocidad: {{ gear.RV }}</li>
               <li>Constante de elasticidad: {{ gear.Cp }}</li>
               <li>Calidad: A{{ gear.Av }}</li>
               <li>Factor geométrico del piñón: {{ gear.Jp }}</li>
@@ -92,12 +93,12 @@
               <li>Aplicaciones de carga por rev {{ gear.q }} </li>
               <li>Vida del piñón en ciclos: {{ gear.Ncp }}</li>
               <li>Vida del piñón en ciclos: {{ gear.Ncg }}</li>
+              <li>Factor de fuerza por estres del piñón: {{ gear.Ynp }}</li>
+              <li>Factor de fuerza por estres del engrane: {{ gear.Yng }}</li>
             </ul>
           </div>
           <div class="col-4">
             <ul>
-              <li>Factor de fuerza por estres del piñón: {{ gear.Ynp }}</li>
-              <li>Factor de fuerza por estres del engrane: {{ gear.Yng }}</li>
               <li>Factor de resistencia por picaduras del piñón: {{ gear.Znp }}</li>
               <li>Factor de resistencia por picaduras del engrane: {{ gear.Zng }}</li>
               <li>Esfuerzo de flexión en el piñón: {{ gear.Stp }} </li>
@@ -107,6 +108,10 @@
               <li>Esfuerzo de contacto: {{ gear.Sc }}</li>
               <li>Esfuerzo de contacto ajustado en el piñón: {{ gear.Sacp }}</li>
               <li>Esfuerzo de contacto ajustado en el engrane: {{ gear.Sacg }}</li>
+              <li>Dureza Brinell del piñón: {{ gear.HBp }}</li>
+              <li>Dureza Brinell del engrane: {{ gear.HBg }}</li>
+              <li>Material para el piñón: {{ gear.materialp }}</li>
+              <li>Material para el engrane: {{ gear.materialg }}</li>
             </ul>
           </div>
         </div>

@@ -54,6 +54,10 @@ class Gear(models.Model):
         'Dientes del engrane',
         null=True,
     )
+    RV = models.FloatField(
+        'Relación de Velocidad',
+        null=True,
+    )
     Dp = models.FloatField(
         'Diametro de paso del piñón',
         null=True,

@@ -89,6 +89,8 @@
 
         <!-- Modal body -->
         <div class="modal-body">
+          <p>Dientes del engrane: {{ gear.Ng }}</p>
+          <p>Dientes del piñón: {{ gear.Np }}</p>
           {% if gear.angle == 20.0 %}
             <img src="{% static "img/J20_table.jpeg" %}" class="img-thumbnail">
           {% elif gear.angle == 25.0 %}
@@ -118,6 +120,8 @@
 
         <!-- Modal body -->
         <div class="modal-body">
+          <p>Relación de Velocidad: {{ gear.RV }}</p>
+          <p>Dientes del piñón: {{ gear.Np }}</p>
           {% if gear.angle == 20.0 %}
             <img src="{% static "img/I20_table.jpeg" %}" class="img-thumbnail">
           {% elif gear.angle == 25.0 %}
@@ -172,6 +176,8 @@
 
         <!-- Modal body -->
         <div class="modal-body">
+          <p>Vida del piñón en ciclos: {{ gear.Ncp }}</p>
+          <p>Vida del engrane en ciclos: {{ gear.Ncg }}</p>
           <img src="{% static "img/Yn_table.jpeg" %}" class="img-thumbnail">
         </div>
 
@@ -197,6 +203,8 @@
 
         <!-- Modal body -->
         <div class="modal-body">
+          <p>Vida del piñón en ciclos: {{ gear.Ncp }}</p>
+          <p>Vida del engrane en ciclos: {{ gear.Ncg }}</p>
           <img src="{% static "img/Zn_table.jpeg" %}" class="img-thumbnail">
         </div>
 

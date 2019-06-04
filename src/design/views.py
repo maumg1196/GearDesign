@@ -63,6 +63,8 @@ class GearCreate(LoginRequiredMixin, CreateView):
         elif self.object.Np == 32.0:
             self.object.angle = 14.5
 
+        self.object.RV = round(Wp / Wg, 4)
+
         angle = self.object.angle
 
         PotD = HP * fs
