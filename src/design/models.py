@@ -1,5 +1,6 @@
 """Gear Design models."""
 from django.db import models
+from django.urls import reverse
 from django.contrib.auth.models import User
 
 
@@ -125,10 +126,6 @@ class Gear(models.Model):
         'Factor de distribución de carga',
         null=True,
     )
-    SF = models.FloatField(
-        'Factor de seguridad',
-        default=1.0,
-    )
     Cpf = models.FloatField(
         'Factor de proporción del piñón',
         null=True,
@@ -222,9 +219,47 @@ class Gear(models.Model):
         null=True,
     )
     Ynp = models.FloatField(
+        'Factor de fuerza por estres del piñón',
         null=True,
     )
     Znp = models.FloatField(
+        'Factor de resistencia por picaduras del piñón',
+        null=True,
+    )
+    Yng = models.FloatField(
+        'Factor de fuerza por estres del engrane',
+        null=True,
+    )
+    Zng = models.FloatField(
+        'Factor de resistencia por picaduras del engrane',
+        null=True,
+    )
+    Stp = models.FloatField(
+        'Esfuerzo de flexión en el piñón',
+        null=True,
+    )
+    Stg = models.FloatField(
+        'Esfuerzo de flexión en el engrane',
+        null=True,
+    )
+    Satp = models.FloatField(
+        'Esfuerzo de flexión ajustado en el piñón',
+        null=True,
+    )
+    Satg = models.FloatField(
+        'Esfuerzo de flexión ajustado en el engrane',
+        null=True,
+    )
+    Sc = models.FloatField(
+        'Esfuerzo de contacto',
+        null=True,
+    )
+    Sacp = models.FloatField(
+        'Esfuerzo de contacto ajustado en el piñón',
+        null=True,
+    )
+    Sacg = models.FloatField(
+        'Esfuerzo de contacto ajustado en el engrane',
         null=True,
     )
 
@@ -233,4 +268,7 @@ class Gear(models.Model):
         verbose_name_plural = "Gears"
 
     def __str__(self):
-        return 'Gear: {}'.format(self.id)
+        return 'Engrane: {}'.format(self.id)
+
+    def get_absolute_url(self):
+        return reverse('design:gear', args=[self.user.id, self.id])

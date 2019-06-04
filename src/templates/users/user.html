@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load static from staticfiles %}
+{% load widget_tweaks %}
+
+{% block title %}Inicio{% endblock title %}
+
+{% block content %}
+
+  <div class="content">
+    <h2>Mis Diseños</h2>
+    <hr>
+    {% for gear in user.gear_set.all %}
+      <div class="card col-4">
+        <div class="card-body">
+          <h3>{{ gear }}</h3>
+          <hr>
+          <p>Nombre: {{ gear.name|default:'Sin nombre' }}</p>
+          <p>Descripción: {{ gear.description|default:'Sin descripción' }}</p>
+          <small><a href="{{gear.get_absolute_url}}">Ver más</a></small>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+{% endblock content %}

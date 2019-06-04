@@ -8,12 +8,14 @@ from .forms import (
 from .models import Gear
 from django.urls import reverse
 from django.views.generic import (
+    RedirectView,
     TemplateView,
     CreateView,
     UpdateView,
     DetailView,
     FormView,
 )
+from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
@@ -165,6 +167,8 @@ class SecondView(LoginRequiredMixin, UpdateView):
 
         Ynp_choice = form.cleaned_data['Ynp']
         Znp_choice = form.cleaned_data['Znp']
+        Yng_choice = form.cleaned_data['Yng']
+        Zng_choice = form.cleaned_data['Zng']
         aligment_type_choice = form.cleaned_data['aligment_type']
 
         if aligment_type_choice == 'Open gearing':
@@ -176,6 +180,8 @@ class SecondView(LoginRequiredMixin, UpdateView):
         elif aligment_type_choice == 'Extra-precision enclosed gear units':
             Cma = 0.0380 + (0.0102 * self.object.F) - (0.822 * (10**-4) * (self.object.F ** 2))
         self.object.Cma = round(Cma, 4)
+
+        self.object.km = round(1.0 + self.object.Cpf + self.object.Cma, 4)
 
         if Ynp_choice == '1':
             Ynp = 9.4518 * (self.object.Ncp**-0.148)
@@ -199,40 +205,78 @@ class SecondView(LoginRequiredMixin, UpdateView):
             Znp = 1.4488 * (self.object.Ncp**-0.023)
         self.object.Znp = round(Znp, 4)
 
+        if Yng_choice == '1':
+            Yng = 9.4518 * (self.object.Ncg**-0.148)
+        elif Yng_choice == '2':
+            Yng = 6.1514 * (self.object.Ncg**-0.1192)
+        elif Yng_choice == '3':
+            Yng = 4.9404 * (self.object.Ncg**-0.1045)
+        elif Yng_choice == '4':
+            Yng = 3.517 * (self.object.Ncg**-0.0817)
+        elif Yng_choice == '5':
+            Yng = 2.3194 * (self.object.Ncg**-0.0538)
+        elif Yng_choice == '6':
+            Yng = 1.3558 * (self.object.Ncg**-0.0178)
+        self.object.Yng = round(Yng, 4)
+
+        if Zng_choice == '1':
+            Zng = 2.466 * (self.object.Ncg**-0.056)
+        elif Zng_choice == '2':
+            Zng = 1.249 * (self.object.Ncg**-0.0138)
+        elif Zng_choice == '3':
+            Zng = 1.4488 * (self.object.Ncg**-0.023)
+        self.object.Zng = round(Zng, 4)
+
+        Stp = (self.object.Ft * self.object.Pd) / (self.object.F * self.object.Jp)
+        Stp = Stp * self.object.fs * self.object.ks * self.object.km * self.object.kb * self.object.kv
+        Stg = Stp * (self.object.Jp / self.object.Jg)
+        self.object.Stp = round(Stp, 4)
+        self.object.Stg = round(Stg, 4)
+
+        Satp = (Stp * self.object.kr * self.object.SF) / self.object.Ynp 
+        Satg = (Stg * self.object.kr * self.object.SF) / self.object.Yng
+        self.object.Satp = round(Satp, 4)
+        self.object.Satg = round(Satg, 4)
+
+        Sc = self.object.Ft * self.object.fs * self.object.ks * self.object.km * self.object.kv
+        Sc = Sc / (self.object.F * self.object.Dp * self.object.I)
+        Sc = self.object.Cp * math.sqrt(Sc)
+        self.object.Sc = round(Sc, 4)
+
+        Sacp = (Sc * self.object.kr * self.object.SF) / self.object.Znp
+        Sacg = (Sc * self.object.kr * self.object.SF) / self.object.Zng
+        self.object.Sacp = round(Sacp, 4)
+        self.object.Sacg = round(Sacg, 4)
+
+        HBp = (Sacp - 29100) / 0.322
+        HBg = (Sacg - 29100) / 0.322
+        self.object.HBp = round(HBp, 4)
+        self.object.HBg = round(HBg, 4)
+
+
         return super(SecondView, self).form_valid(form)
 
     def get_success_url(self):
         return reverse('design:first')
 
 
-class FirstView(LoginRequiredMixin, FormView):
-    """This view recibe form fields and send an email."""
+class GearDetail(LoginRequiredMixin, DetailView):
 
-    template_name = 'test.html'
-    form_class = FirstForm
-    fs = ""
-    HP = ""
-    Np = ""
-    Pd = ""
-    Wg = ""
-    Wp = ""
+    model = Gear
+    pk_url_kwarg = 'gear_id'
+    template_name = "test.html"
+    context_object_name = 'gear'
 
-    def form_valid(self, form):
-        self.fs = form.cleaned_data['fs']
-        self.HP = form.cleaned_data['HP']
-        self.Np = form.cleaned_data['Np']
-        self.Pd = form.cleaned_data['Pd']
-        self.Wg = form.cleaned_data['Wg']
-        self.Wp = form.cleaned_data['Wp']
-        return super(FirstView, self).form_valid(form)
 
-    def get_success_url(self):
-        url = '/second/?fs={}&HP={}&Np={}&Pd={}&Wg={}&Wp={}'.format(
-            self.fs,
-            self.HP,
-            self.Np,
-            self.Pd,
-            self.Wg,
-            self.Wp,
-        )
-        return url
+class UserDetail(LoginRequiredMixin, DetailView):
+
+    model = User
+    pk_url_kwarg = 'user_id'
+    template_name = "users/user.html"
+    context_object_name = 'user'
+
+
+class FirstView(LoginRequiredMixin, RedirectView):
+
+    def get_redirect_url(self, *args, **kwargs):
+        return reverse('design:user', kwargs={'user_id': self.request.user.id})

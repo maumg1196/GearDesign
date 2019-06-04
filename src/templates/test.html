@@ -5,149 +5,111 @@
 {% block title %}Inicio{% endblock title %}
 
 {% block content %}
-  
-    <div class="card center" style="width: 80%;">
-      <div class="card-body">
-        <form action="" method="post">
-          {% csrf_token %}
-          <div class="row">
-            <div class="col-6 form-group">
-              <label for="{{ form.Jp.id_for_label }}">Factor geométrico del piñón <small>*</small></label>
-              {{ form.Jp|add_class:"form-control" }}
-              <small id="emailHelp" class="form-text text-muted">Si no sabes el factor de servicio haz click <a href="" data-toggle="modal" data-target="#FSModal">aquí.</a></small>
-            </div>
-            <div class="col-6 form-group">
-              <label for="{{ form.Jg.id_for_label }}">Factor geométrico del engrane <small>*</small></label>
-              {{ form.Jg|add_class:"form-control" }}
-              <small id="emailHelp" class="form-text text-muted">Ingrese la cantidad en HPs</small>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-6 form-group">
-              <label for="{{ form.I.id_for_label }}">Factor geométrico, I <small>*</small></label>
-              {{ form.I|add_class:"form-control" }}
-              <small id="emailHelp" class="form-text text-muted">Si no sabes el número de dientes del piñon haz click <a href="" data-toggle="modal" data-target="#NpModal">aquí.</a></small>
-            </div>
-            <div class="col-6 form-group">
-              <label for="{{ form.kr.id_for_label }}">Factor de Confiabilidad <small>*</small></label>
-              {{ form.kr|add_class:"form-control" }}
-              <small id="emailHelp" class="form-text text-muted">Si tienes un rango pon la media</a></small>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-6 form-group">
-              <label for="{{ form.Ynp.id_for_label }}">Ynp <small>*</small></label>
-              {{ form.Ynp|add_class:"form-control" }}
-              <small id="emailHelp" class="form-text text-muted">Si tienes un rango pon la media</a></small>
-            </div>
-            <div class="col-6 form-group">
-              <label for="{{ form.Znp.id_for_label }}">Znp <small>*</small></label>
-              {{ form.Znp|add_class:"form-control" }}
-              <small id="emailHelp" class="form-text text-muted">Si no sabes el paso diametral haz click <a href="" data-toggle="modal" data-target="#PdModal">aquí.</a></small>
-            </div>
-          </div>
-          <button type="submit" class="btn btn-success">Calcular</button>
-        </form>
+
+  <div class="content">
+    <h2>{{ gear }}</h2>
+    <h3>Nombre: <small>{{ gear.name|default:'Sin nombre' }}</small></h3>
+    <h3>Descripción: <small>{{ gear.name|default:'Sin descripción' }}</small></h3>
+    <hr>
+    <nav>
+      <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Dimensiones</a>
+        <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Especificaciones</a>
       </div>
-    </div>
-  </div>
-
-  <!-- Modal fs -->
-  <div class="modal" id="FSModal">
-    <div class="modal-dialog">
-      <div class="modal-content">
-
-        <!-- Modal Header -->
-        <div class="modal-header">
-          <h4 class="modal-title">Factor de Servicio</h4>
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
+    </nav>
+    <div class="tab-content" id="nav-tabContent">
+      <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+        <div class="row">
+          <div class="col-4">
+            <ul>
+              <li>Dp: {{ gear.Dp }}in</li>
+              <li>Dg: {{ gear.Dg }}in</li>
+              <li>P: {{ gear.P }}in</li>
+              <li>Addendum: {{ gear.addendum }}in</li>
+              <li>Dedendum: {{ gear.dedendum }}in</li>
+              <li>Claro: {{ gear.clair }}in</li>
+            </ul>
+          </div>
+          <div class="col-4">
+            <ul>
+              <li>Diametro exterior del piñón: {{ gear.Dep }}in</li>
+              <li>Diametro exterior del engrane: {{ gear.Deg }}in</li>
+              <li>Diametro de raíz para el piñón: {{ gear.Drp }}in</li>
+              <li>Diametro de raíz para el engrane: {{ gear.Drg }}in</li>
+              <li>Profundidad completa: {{ gear.depth_total }}in</li>
+              <li>Profundidad de trabajo: {{ gear.work_depth }}in</li>
+            </ul>
+          </div>
+          <div class="col-4">
+            <ul>
+              <li>Espesor del diente: {{ gear.t }}in</li>
+              <li>Distancia entre centros: {{ gear.C }}in</li>
+              <li>Diametro de circulo base del piñón: {{ gear.Dbp }}in</li>
+              <li>Diametro de circulo base del engrane: {{ gear.Dbg }}in</li>
+            </ul>
+          </div>
         </div>
-
-        <!-- Modal body -->
-        <div class="modal-body">
-          <img src="{% static "img/fs_table.jpeg" %}" class="img-thumbnail">
-        </div>
-
-        <!-- Modal footer -->
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-        </div>
-
       </div>
-    </div>
-  </div>
-
-  <!-- Modal Np -->
-  <div class="modal" id="NpModal">
-    <div class="modal-dialog">
-      <div class="modal-content">
-
-        <!-- Modal Header -->
-        <div class="modal-header">
-          <h4 class="modal-title">Número de dientes del Piñón</h4>
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
+      <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+        <div class="row">
+          <div class="col-4">
+            <ul>
+              <li>Factor de Servicio: {{ gear.fs }}</li>
+              <li>Potencia del Motor: {{ gear.HP }}</li>
+              <li>Dientes del piñón: {{ gear.Np }}</li>
+              <li>Dientes del engrane: {{ gear.Ng }}</li>
+              <li>Ángulo: {{ gear.angle }}</li>
+              <li>Paso diametral: {{ gear.Pd }}</li>
+              <li>RPMs del engrane: {{ gear.Wg }}</li>
+              <li>RPMs del piñón: {{ gear.Wp }}</li>
+              <li>Potencia de diseño: {{ gear.PotD }}</li>
+              <li>Velocidad tangencial: {{ gear.Vt }}</li>
+              <li>Fuerza transmitida: {{ gear.Ft }}</li>
+              <li>Ancho de la cara: {{ gear.F }}</li>
+              <li>Constante de elasticidad: {{ gear.Cp }}</li>
+              <li>Calidad: A{{ gear.Av }}</li>
+              <li>Factor geométrico del piñón: {{ gear.Jp }}</li>
+              <li>Factor geométrico del engrane: {{ gear.Jg }}</li>
+              <li>Factor geométrico: {{ gear.I }}</li>
+              <li>Factor dinámico: {{ gear.kv }}</li>
+            </ul>
+          </div>
+          <div class="col-4">
+            <ul>
+              <li>Factor de espesor de la corona: {{ gear.kb }}</li>
+              <li>Factor de seguridad: {{ gear.SF }}</li>
+              <li>Factor de confiabilidad: {{ gear.kr }}</li>
+              <li>Factor de tamaño: {{ gear.ks }}</li>
+              <li>Factor de distribución de carga: {{ gear.km }}</li>
+              <li>Factor de proporción del piñón: {{ gear.Cpf }}</li>
+              <li>Factor de alineación: {{ gear.Cma }}</li>
+              <li>Módulo de elasticidad del piñón: {{ gear.Ep }}</li>
+              <li>Módulo de elasticidad del engrane: {{ gear.Eg }}</li>
+              <li>Constante de poisson del piñón: {{ gear.Vp }}</li>
+              <li>Constante de poisson del piñón: {{ gear.Vg }}</li>
+              <li>Horas de trabajo por día: {{ gear.hrs }}hrs</li>
+              <li>Vida del componente: {{ gear.L }}ciclos</li>
+              <li>Aplicaciones de carga por rev {{ gear.q }} </li>
+              <li>Vida del piñón en ciclos: {{ gear.Ncp }}</li>
+              <li>Vida del piñón en ciclos: {{ gear.Ncg }}</li>
+            </ul>
+          </div>
+          <div class="col-4">
+            <ul>
+              <li>Factor de fuerza por estres del piñón: {{ gear.Ynp }}</li>
+              <li>Factor de fuerza por estres del engrane: {{ gear.Yng }}</li>
+              <li>Factor de resistencia por picaduras del piñón: {{ gear.Znp }}</li>
+              <li>Factor de resistencia por picaduras del engrane: {{ gear.Zng }}</li>
+              <li>Esfuerzo de flexión en el piñón: {{ gear.Stp }} </li>
+              <li>Esfuerzo de flexión en el engrane: {{ gear.Stg }} </li>
+              <li>Esfuerzo de flexión ajustado en el piñón: {{ gear.Satp }}</li>
+              <li>Esfuerzo de flexión ajustado en el engrane: {{ gear.Satg }}</li>
+              <li>Esfuerzo de contacto: {{ gear.Sc }}</li>
+              <li>Esfuerzo de contacto ajustado en el piñón: {{ gear.Sacp }}</li>
+              <li>Esfuerzo de contacto ajustado en el engrane: {{ gear.Sacg }}</li>
+            </ul>
+          </div>
         </div>
-
-        <!-- Modal body -->
-        <div class="modal-body">
-          <table class="table">
-            <thead>
-              <tr>
-                <th scope="col">Angulo de Presión</th>
-                <th scope="col"># de Dientes</th>
-                <th scope="col">Recomendado</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>14.5</td>
-                <td>32</td>
-                <td><i class="fas fa-times-circle"></i></td>
-              </tr>
-              <tr>
-                <td>20</td>
-                <td>18</td>
-                <td><i class="fas fa-check-circle"></i><i class="fas fa-check-circle"></i></td>
-              </tr>
-              <tr>
-                <td>25</td>
-                <td>12</td>
-                <td><i class="fas fa-check-circle"></i></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <!-- Modal footer -->
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-        </div>
-
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal fs -->
-  <div class="modal" id="PdModal">
-    <div class="modal-dialog">
-      <div class="modal-content">
-
-        <!-- Modal Header -->
-        <div class="modal-header">
-          <h4 class="modal-title">Factor de Servicio</h4>
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-        </div>
-
-        <!-- Modal body -->
-        <div class="modal-body">
-          <img src="{% static "img/Pd_table.jpeg" %}" class="img-thumbnail">
-        </div>
-
-        <!-- Modal footer -->
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-        </div>
-
       </div>
     </div>
   </div>

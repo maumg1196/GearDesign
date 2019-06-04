@@ -67,6 +67,14 @@ class GearForm2(forms.ModelForm):
         required=True,
         choices=Znp_choices,
     )
+    Yng = forms.ChoiceField(
+        required=True,
+        choices=Ynp_choices,
+    )
+    Zng = forms.ChoiceField(
+        required=True,
+        choices=Znp_choices,
+    )
     aligment_type = forms.ChoiceField(
         required=True,
         choices=aligment_choices,

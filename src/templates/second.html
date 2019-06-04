@@ -58,6 +58,18 @@
               <small id="emailHelp" class="form-text text-muted">Obtenga el número de ecuación correspondiente <a href="" data-toggle="modal" data-target="#ZnpModal">aquí.</a></small>
             </div>
           </div>
+          <div class="row">
+            <div class="col-6 form-group">
+              <label for="{{ form.Yng.id_for_label }}">Yng <small>*</small></label>
+              {{ form.Yng|add_class:"form-control" }}
+              <small id="emailHelp" class="form-text text-muted">Obtenga el número de ecuación correspondiente <a href="" data-toggle="modal" data-target="#YnpModal">aquí.</a></small>
+            </div>
+            <div class="col-6 form-group">
+              <label for="{{ form.Zng.id_for_label }}">Zng <small>*</small></label>
+              {{ form.Zng|add_class:"form-control" }}
+              <small id="emailHelp" class="form-text text-muted">Obtenga el número de ecuación correspondiente <a href="" data-toggle="modal" data-target="#ZnpModal">aquí.</a></small>
+            </div>
+          </div>
           <button type="submit" class="btn btn-success">Calcular</button>
         </form>
       </div>
